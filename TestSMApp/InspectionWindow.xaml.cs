@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TestSMApp.ViewModel;
 
 namespace TestSMApp
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для InspectionWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class InspectionWindow : Window
     {
-        public MainWindow()
+        public InspectionWindow()
         {
             InitializeComponent();
-            MainViewModel m = new MainViewModel();
-            m.Init();
-            DataContext = m;
-            
         }
     }
 }

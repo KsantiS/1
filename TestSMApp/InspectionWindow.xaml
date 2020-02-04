@@ -1,0 +1,70 @@
+﻿<Window x:Class="TestSMApp.InspectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestSMApp"
+        mc:Ignorable="d"
+        Title="Инспекция" Height="500" Width="700" SizeToContent="Height"  WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="24" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <TextBlock  Text="Название инспекции" Width="120" Margin="5 0" />
+            <ComboBox Width="100" ItemsSource="{Binding InspectionNames}" SelectedItem="{Binding Inspection.InspectionName}" SelectedValuePath="Name" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="Дата" Width="120" Margin="5 0"/>
+            <DatePicker  SelectedDate="{Binding Inspection.Date}" Width="100" />
+        </StackPanel>
+        <StackPanel  Grid.Row="3" Orientation="Horizontal">
+            <TextBlock Text="Инспектор" Width="120" Margin="5 0"/>
+            <ComboBox Width="100" ItemsSource="{Binding Inspectors}" SelectedItem="{Binding Inspection.Inspector}" SelectedValuePath="FIO" DisplayMemberPath="FIO" IsSynchronizedWithCurrentItem="True"/>
+        </StackPanel>
+        <StackPanel  Grid.Row="4" Orientation="Horizontal">
+            <TextBlock Text="Комментарий" Width="120" Margin="5 0"/>
+            <TextBox Width="100" Text="{Binding Inspection.Comment}" />
+        </StackPanel>
+        
+
+        <Grid Grid.Row="5" >
+            <UniformGrid>
+                <DataGrid ItemsSource="{Binding Inspection.Remarks}" AutoGenerateColumns="False" MaxHeight="300" ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedRemark}" >
+                    <DataGrid.Columns>
+                        <!--<DataGridTextColumn Width="*" IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>-->
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Замечание" Binding="{Binding RemarkName.Name}"/>
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Дата устранения" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Комментарий" Binding="{Binding Comment}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel>
+
+                    <TextBlock Text="замечание"/>
+                    <ComboBox ItemsSource="{Binding RemarkNames}" SelectedItem="{Binding SelectedRemark.RemarkName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Name" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+                    <TextBlock Text="дата устранения"/>
+                    <DatePicker SelectedDate="{Binding SelectedRemark.Date}"/>
+                    <TextBlock Text="комментарий"/>
+                    <TextBox Text="{Binding SelectedRemark.Comment}"/>
+                    <UniformGrid>
+                        <Button Content="Добавить" Command="{Binding AddNewRemarkCommand}"/>
+                        <Button Content="Удалить" Command="{Binding DropNewRemarkCommand}"/>
+                    </UniformGrid>
+                </StackPanel>
+            </UniformGrid>
+
+        </Grid>
+        <WrapPanel Grid.Row="5" HorizontalAlignment="Right" Margin="0,155,0,0">
+            <Button IsDefault="False" MinWidth="60" Margin="0,0,10,0" Command="{Binding UpdateViewInspectionCommand}">OK</Button>
+            <Button IsCancel="True" MinWidth="60">Отмена</Button>
+        </WrapPanel>
+    </Grid>
+</Window>

@@ -7,6 +7,58 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <StackPanel>
+        <DockPanel Height="25" >
+                <Label Content="{Binding Cont}"/>
+                <Button Content="Сравочник Инспектор" Command="{Binding ShowViewInspectorCommand}"  HorizontalAlignment="Right"/>
+        </DockPanel>
+            <GroupBox Padding="20" >
+                <StackPanel>
+                <UniformGrid Columns="2">
+                    <DockPanel Margin="10 0 10 0">
+                        <Label>Инспектор</Label>
+                            <ComboBox ItemsSource="{Binding InfoInspectors}" SelectedItem="{Binding FilterInspector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FIO"/>
+                        </DockPanel>
+                    <DockPanel  Margin="10 0 10 0">
+                        <Label>Название</Label>
+                        <TextBox Text="{Binding NameInfo}"></TextBox>
+                    </DockPanel>
+                </UniformGrid>
+                    <StackPanel Orientation="Horizontal">
+                        <Button  Content="+" Command="{Binding AddInspectionCommand}" Margin="5 1"/>
+                        <Button  Content="-" Command="{Binding DropInspectionCommand}" Margin="5 1"/>
+                        <Button  Content="ред." Command="{Binding EditInspectionCommand}" Margin="5 1"/>
+                    </StackPanel>
+
+                    <DataGrid ItemsSource="{Binding FilterInspections}" MaxHeight="300" AutoGenerateColumns="False" SelectedItem="{Binding SelectedInspection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <!--<DataGridTextColumn Width="*" IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>-->
+                        <DataGridTextColumn Width="*"  IsReadOnly="True" Header="название инспекции" Binding="{Binding InspectionName.Name}" />
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Дата" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}"/>
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Инспектор" Binding="{Binding Inspector.FIO}"/>
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Комментарий" Binding="{Binding Comment}"/>
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Количество замечаний" Binding="{Binding CountRemark}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+        </StackPanel> 
+        </GroupBox>
+        <DockPanel Height="30" >
+            <Label>Замечания</Label>
+               
+        </DockPanel>
+        <GroupBox Padding="20" >
+                <DataGrid ItemsSource="{Binding SelectedInspection.Remarks}" AutoGenerateColumns="False" MaxHeight="300" ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <!--<DataGridTextColumn Width="*" IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>-->
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Замечание" Binding="{Binding RemarkName.Name}"/>
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Дата устранения" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}"/>
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="Комментарий" Binding="{Binding Comment}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+        </GroupBox>
+        </StackPanel>
         
     </Grid>
 </Window>
